@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, MouseEvent } from "react";
+import { useState, useReducer, MouseEvent } from "react";
 
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -17,18 +16,25 @@ import AddIcon from "@mui/icons-material/Add";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 export default function Page() {
+  // const [, forceUpdate] = useReducer((x) => x + 1, 0); // used JUST in this example to force a re-render. DO NOT USE!
   const [count, setCount] = useState(0);
   const theme = useTheme();
 
+  let c = 0;
+  console.log(`Rendered! Count is: ${count}`);
+
   const handelIncrement = (e: MouseEvent<HTMLButtonElement>) => {
-    setCount(count + 1);
-    console.log(`${count} button was clicked!`);
-    console.dir(e);
+    const incCount = count + 1;
+    setCount(incCount);
+    console.log(`Button was clicked! Count is: ${incCount}`);
+    // console.dir(e);
+    // forceUpdate(); // used JUST in this example to force a re-render. DO NOT USE!
   };
 
   const handelReset = () => {
+    console.log(`Reset button was clicked! Count was: ${c}`);
     setCount(0);
-    console.log(`Reset button was clicked!`);
+    // forceUpdate(); // used JUST in this example to force a re-render. DO NOT USE!
   };
 
   return (
@@ -58,13 +64,6 @@ export default function Page() {
           </IconButton>
         </CardActions>
       </Card>
-      {/* <Button variant="contained" color="secondary" onClick={handelIncrement}>
-        Increment
-      </Button>
-      <Button variant="outlined" color="error" onClick={handelReset}>
-        Reset
-      </Button>
-      <Counter count={count} /> */}
     </main>
   );
 }
