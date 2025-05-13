@@ -3,6 +3,7 @@
 import { useState, useReducer, MouseEvent } from "react";
 
 import {
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -16,29 +17,35 @@ import AddIcon from "@mui/icons-material/Add";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 export default function Page() {
-  // const [, forceUpdate] = useReducer((x) => x + 1, 0); // used JUST in this example to force a re-render. DO NOT USE!
-  const [count, setCount] = useState(0);
+  const [, forceUpdate] = useReducer((x) => x + 1, 0); // used JUST in this example to force a re-render. DO NOT USE!
   const theme = useTheme();
 
   let c = 0;
-  console.log(`Rendered! Count is: ${count}`);
+  console.log(`Rendered! Count is: ${c}`);
 
   const handelIncrement = (e: MouseEvent<HTMLButtonElement>) => {
-    const incCount = count + 1;
-    setCount(incCount);
-    console.log(`Button was clicked! Count is: ${incCount}`);
-    // console.dir(e);
+    c = c + 1;
+    console.log(`Button was clicked! Count is: ${c}`);
+    // console.dir(e); // what does the event look like?
+    // console.log(e.currentTarget); // what does the currentTarget look like?
     // forceUpdate(); // used JUST in this example to force a re-render. DO NOT USE!
   };
 
   const handelReset = () => {
     console.log(`Reset button was clicked! Count was: ${c}`);
-    setCount(0);
+    c = 0;
     // forceUpdate(); // used JUST in this example to force a re-render. DO NOT USE!
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <Box
+      sx={{
+        marginTop: 2,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           title="Incrementor example"
@@ -53,7 +60,7 @@ export default function Page() {
         />
         <CardContent>
           The count currently is:
-          <Counter count={count} />
+          <Counter count={c} />
         </CardContent>
         <CardActions>
           <IconButton aria-label="Increment Action" onClick={handelIncrement}>
@@ -64,7 +71,7 @@ export default function Page() {
           </IconButton>
         </CardActions>
       </Card>
-    </main>
+    </Box>
   );
 }
 
