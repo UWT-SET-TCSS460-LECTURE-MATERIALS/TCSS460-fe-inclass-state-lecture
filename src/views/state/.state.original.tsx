@@ -1,5 +1,7 @@
 "use client";
 
+// note: This file uses incorrect patterns with regards to state in React. This is on purpose for teaching reasons.
+
 import { useState, useReducer, MouseEvent } from "react";
 
 import {
@@ -9,16 +11,15 @@ import {
   CardContent,
   CardHeader,
   IconButton,
-  useTheme,
+  Typography,
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
-export default function Page() {
+export default function State() {
   const [, forceUpdate] = useReducer((x) => x + 1, 0); // used JUST in this example to force a re-render. DO NOT USE!
-  const theme = useTheme();
 
   let c = 0;
   console.log(`Rendered! Count is: ${c}`);
@@ -50,23 +51,39 @@ export default function Page() {
         <CardHeader
           title="Incrementor example"
           subheader="TCSS 460"
-          subheaderTypographyProps={{
-            color: theme.palette.primary.contrastText,
+          slotProps={{
+            subheader: {
+              sx: { color: "secondary.contrastText" },
+            },
           }}
           sx={{
-            background: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
+            bgcolor: "secondary.dark",
+            color: "secondary.contrastText",
           }}
         />
         <CardContent>
-          The count currently is:
+          <Typography variant="body1" color="text.secondary.dark">
+            The count currently is:
+          </Typography>
           <Counter count={c} />
         </CardContent>
         <CardActions>
-          <IconButton aria-label="Increment Action" onClick={handelIncrement}>
+          <IconButton
+            aria-label="Increment Action"
+            sx={{
+              color: "secondary.dark",
+            }}
+            onClick={handelIncrement}
+          >
             <AddIcon />
           </IconButton>
-          <IconButton aria-label="Reset Action" onClick={handelReset}>
+          <IconButton
+            aria-label="Reset Action"
+            sx={{
+              color: "secondary.dark",
+            }}
+            onClick={handelReset}
+          >
             <RestartAltIcon />
           </IconButton>
         </CardActions>
@@ -76,5 +93,9 @@ export default function Page() {
 }
 
 function Counter({ count }: { count: number }) {
-  return <p>{count}</p>;
+  return (
+    <Typography variant="body1" color="text.secondary.dark">
+      {count}
+    </Typography>
+  );
 }
